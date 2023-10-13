@@ -9,6 +9,15 @@ export interface IEvent {
 }
 
 export interface IDateFilter {
-    year: string;
-    month: string;
+    year: number;
+    month: number;
+}
+
+export interface IEventListPageProps {
+    events: IEvent[]
+}
+
+
+export interface IDetailedEventPageProps {
+    event: IEvent;
 }

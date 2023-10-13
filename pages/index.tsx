@@ -1,23 +1,29 @@
-import { memo, useCallback } from "react";
 import { EventList } from "@/components/events/event-list";
-import { useFeaturedEvents } from "@/data";
-import { EventSearch } from "@/components/events/events-search";
-import { IDateFilter } from "@/types";
-import { useRouter } from "next/router";
+import { IEventListPageProps } from "@/types";
+import { getFeaturedEvents } from "@/utils/api-helpers";
+import Head from "next/head";
+import { memo } from "react";
 
-const HomePage = memo(() => {
-    const { push } = useRouter();
-    const featuredEvents = useFeaturedEvents();
-
-    const searchEventsHandler = useCallback(({ month, year }: IDateFilter) => {
-        const fullPath = `/events/${year}/${month}`;
-        push(fullPath);
-    }, [push])
+//!We can append the contents inside the head tag using Head
+const HomePage = memo((props: IEventListPageProps) => {
 
     return <div>
-        <EventSearch onSearch={searchEventsHandler} />
-        <EventList events={featuredEvents} />
+        <Head>
+            <title>Events Planner</title>
+            <meta name="description" content="Find a lot of great events that allow you to evolve..." />
+        </Head>
+        <EventList events={props?.events} />
     </div>
 });
 
 export default HomePage;
+
+export const getStaticProps = async () => {
+    const events = await getFeaturedEvents();
+    return {
+        props: {
+            events
+        },
+        revalidate: 1800
+    }
+}

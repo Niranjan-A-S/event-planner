@@ -1,8 +1,7 @@
 import { IEvent } from '@/types';
 import classes from './event-summary.module.css';
 
-function EventSummary(props: Pick<IEvent, 'title'>) {
-  const { title } = props;
+function EventSummary({ title }: Pick<IEvent, 'title'>) {
 
   return (
     <section className={classes.summary}>

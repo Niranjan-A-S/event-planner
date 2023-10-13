@@ -1,8 +1,10 @@
+import Image from 'next/image';
+import { useMemo } from 'react';
 import AddressIcon from '../icons/address-icon';
 import DateIcon from '../icons/date-icon';
-import LogisticsItem from './logistics-item';
 import classes from './event-logistics.module.css';
-import { IEvent } from '@/types';
+import LogisticsItem from './logistics-item';
+
 
 interface IEventLogisticsProps {
   date: string;
@@ -11,20 +13,20 @@ interface IEventLogisticsProps {
   imageAlt: string;
 }
 
-function EventLogistics(props: IEventLogisticsProps) {
-  const { date, location, image, imageAlt } = props;
+function EventLogistics({ date, location, image, imageAlt }: IEventLogisticsProps) {
 
-  const humanReadableDate = new Date(date).toLocaleDateString('en-US', {
+  const humanReadableDate = useMemo(() => new Date(date).toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
-  });
-  const addressText = location.replace(', ', '\n');
+  }), [date]);
+
+  const addressText = useMemo(() => location.replace(', ', '\n'), [location]);
 
   return (
     <section className={classes.logistics}>
       <div className={classes.image}>
-        <img src={`/${image}`} alt={imageAlt} />
+        <Image loading="lazy" layout="responsive" src={image} alt={imageAlt} width={250} height={160} />
       </div>
       <ul className={classes.list}>
         <LogisticsItem icon={DateIcon}>

@@ -98,26 +98,13 @@ const DUMMY_EVENTS: Array<IEvent> = [
 
 export const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-
-export function useFeaturedEvents() {
-    return DUMMY_EVENTS.filter((event) => event.isFeatured);
-}
-
-export function useAllEvents() {
-    return DUMMY_EVENTS;
-}
-
 export function useFilteredEvents(dateFilter: IDateFilter) {
     const { year, month } = dateFilter;
 
     let filteredEvents = DUMMY_EVENTS.filter((event) => {
         const eventDate = new Date(event.date);
-        return eventDate.getFullYear() === +year && eventDate.getMonth() === +month - 1;
+        return eventDate.getFullYear() === year && eventDate.getMonth() === month - 1;
     });
 
     return filteredEvents;
-}
-
-export function getEventById(id: IEvent['id']) {
-    return DUMMY_EVENTS.find((event) => event.id === id);
 }

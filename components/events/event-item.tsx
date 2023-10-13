@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import DateIcon from "../icons/date-icon";
 import AddressIcon from "../icons/address-icon";
 import ArrowRightIcon from "../icons/arrow-right-icon";
+import Image from 'next/image'
 
 interface IEventItemProps {
     event: IEvent;
@@ -23,8 +24,8 @@ export const EventItem: FC<IEventItemProps> = memo(({ event: { date, title, imag
     const exploreLink = useMemo(() => `/events/${id}`, [id]);
 
     return <li className={classes.item}>
-        <img src={image} alt={title} />
-        <div>
+        <Image loading="lazy" layout="responsive" src={image} alt={title} width={250} height={160} />
+        <div className="classes.content">
             <div className={classes.summary}>
                 <h2>{title}</h2>
                 <div className={classes.date}>
@@ -39,7 +40,9 @@ export const EventItem: FC<IEventItemProps> = memo(({ event: { date, title, imag
             <div className={classes.actions}>
                 <Button link={exploreLink}>
                     <span>Explore Event</span>
-                    <span className={classes.icon}><ArrowRightIcon /></span>
+                    <span className={classes.icon}>
+                        <ArrowRightIcon />
+                    </span>
                 </Button>
             </div>
         </div>

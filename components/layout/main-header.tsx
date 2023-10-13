@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { memo } from "react";
 
-import classes from "./main-header.module.css"
+import classes from "./main-header.module.css";
 
-export const MainHeader = memo(() => {
-    return <header className={classes.header}>
+export const MainHeader = memo(() =>
+    <header className={classes.header}>
         <div className={classes.logo}>
             <Link href="/">Next Events</Link>
         </div>
@@ -16,5 +16,4 @@ export const MainHeader = memo(() => {
             </ul>
         </nav>
     </header>
-});
-
+);

@@ -6,15 +6,14 @@ interface ILogisticsItemProps {
   children: ReactNode;
 }
 
-function LogisticsItem(props: ILogisticsItemProps) {
-  const { icon: Icon } = props;
+function LogisticsItem({ icon: Icon, children }: ILogisticsItemProps) {
 
   return (
     <li className={classes.item}>
       <span className={classes.icon}>
         {createElement(Icon)}
       </span>
-      <span className={classes.content}>{props.children}</span>
+      <span className={classes.content}>{children}</span>
     </li>
   );
 }

@@ -9,5 +9,7 @@ interface IButtonProps {
 }
 
 export const Button: FC<IButtonProps> = memo(({ children, link, onClick }) =>
-    link ? <Link className={classes.btn} href={link} >{children}</Link> : <button onClick={onClick} className={classes.btn}>{children}</button>
+    link
+        ? <Link className={classes.btn} href={link} >{children}</Link>
+        : <button onClick={onClick} className={classes.btn}>{children}</button>
 )
