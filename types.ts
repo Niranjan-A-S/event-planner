@@ -35,3 +35,19 @@ export interface IComment {
     text: string;
     id: string;
 }
+
+export type Status = 'pending' | 'success' | 'error';
+
+export interface INotificationProps {
+    title: string;
+    message: string;
+    status: Status;
+}
+
+
+
+export interface INotificationContext {
+    notification: INotificationProps | null;
+    showNotification: (notificationData: INotificationProps) => void;
+    hideNotification: () => void;
+}

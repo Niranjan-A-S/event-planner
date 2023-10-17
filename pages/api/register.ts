@@ -1,4 +1,4 @@
-import { getDb } from "@/config/db";
+import { connectToDatabase, insertDocument } from "@/config/db";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 const handleUserRegister = async (req: NextApiRequest, res: NextApiResponse) => {
     if (!req.body) {
-        res.status(404).send('Empty body');
+        res.status(204).send('Empty body');
     }
 
     const { email } = req.body
@@ -22,7 +22,7 @@ const handleUserRegister = async (req: NextApiRequest, res: NextApiResponse) => 
     }
     let db, client;
     try {
-        const connection = await getDb();
+        const connection = await connectToDatabase();
         db = connection.db;
         client = connection.client;
     } catch (error) {
@@ -30,7 +30,7 @@ const handleUserRegister = async (req: NextApiRequest, res: NextApiResponse) => 
     }
 
     try {
-        await db?.collection('emails').insertOne(newUser);
+        await insertDocument(db, 'emails', newUser);
         client?.close();
     } catch (error) {
         return res.status(500).json({ message: 'Failed to store the document to DB' });

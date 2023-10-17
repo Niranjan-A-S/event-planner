@@ -1,7 +1,4 @@
-import { getDb } from "@/config/db";
-import { buildFilePath, extractData } from "@/utils/helpers";
-import { randomUUID } from "crypto";
-import fs from "fs/promises"
+import { connectToDatabase, insertDocument } from "@/config/db";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -26,8 +23,22 @@ const updateComments = async (req: NextApiRequest, res: NextApiResponse) => {
         ...comment,
         eventId
     }
-    const { db, client } = await getDb();
-    await db.collection('comments').insertOne(newComment);
+
+    let db, client;
+    try {
+        const connection = await connectToDatabase();
+        db = connection.db;
+        client = connection.client;
+    } catch (error) {
+        return res.status(500).json({ message: 'Error connecting to DB' });
+    }
+
+    try {
+        await insertDocument(db, 'comments', newComment);
+        client?.close();
+    } catch (error) {
+        return res.status(500).json({ message: 'Failed to store the document to DB' });
+    }
     // const filePath = buildFilePath('comments');
     // const data = await extractData(filePath);
     // data.push(newComment);
@@ -40,11 +51,22 @@ const updateComments = async (req: NextApiRequest, res: NextApiResponse) => {
 }
 
 const getRequestHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+    let db, client, result;
+    try {
+        const connection = await connectToDatabase();
+        db = connection.db;
+        client = connection.client;
+    } catch (error) {
+        return res.status(500).json({ message: 'Error connecting to DB' });
+    }
 
-    const { db, client } = await getDb();
-    const result = await db.collection('comments').find({}).toArray();
+    try {
+        result = await db.collection('comments').find({}).toArray();
+        client?.close();
+    } catch (error) {
+        return res.status(500).json({ message: 'Failed to store the document to DB' });
+    }
     res.status(201).json(result.map(({ _id, name, email, text }) => ({
         id: _id, name, email, text
     })));
-    client.close();
 }
