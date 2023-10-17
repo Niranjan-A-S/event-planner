@@ -26,7 +26,7 @@ function EventLogistics({ date, location, image, imageAlt }: IEventLogisticsProp
   return (
     <section className={classes.logistics}>
       <div className={classes.image}>
-        <Image loading="lazy" layout="responsive" src={image} alt={imageAlt} width={250} height={160} />
+        <Image loading="lazy" src={image} alt={imageAlt} width={250} height={160} />
       </div>
       <ul className={classes.list}>
         <LogisticsItem icon={DateIcon}>

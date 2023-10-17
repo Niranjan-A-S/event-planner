@@ -1,4 +1,5 @@
 import { EventList } from "@/components/events/event-list";
+import NewsletterRegistration from "@/components/input/newsletter-registration";
 import { IEventListPageProps } from "@/types";
 import { getFeaturedEvents } from "@/utils/api-helpers";
 import Head from "next/head";
@@ -12,6 +13,7 @@ const HomePage = memo((props: IEventListPageProps) => {
             <title>Events Planner</title>
             <meta name="description" content="Find a lot of great events that allow you to evolve..." />
         </Head>
+        <NewsletterRegistration />
         <EventList events={props?.events} />
     </div>
 });

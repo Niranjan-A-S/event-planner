@@ -24,7 +24,7 @@ export const EventItem: FC<IEventItemProps> = memo(({ event: { date, title, imag
     const exploreLink = useMemo(() => `/events/${id}`, [id]);
 
     return <li className={classes.item}>
-        <Image loading="lazy" layout="responsive" src={image} alt={title} width={250} height={160} />
+        <Image loading="lazy" src={image} alt={title} width={250} height={160} />
         <div className="classes.content">
             <div className={classes.summary}>
                 <h2>{title}</h2>

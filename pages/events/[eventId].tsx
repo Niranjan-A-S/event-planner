@@ -1,6 +1,7 @@
 import EventContent from "@/components/event-detail/event-content";
 import EventLogistics from "@/components/event-detail/event-logistics";
 import EventSummary from "@/components/event-detail/event-summary";
+import Comments from "@/components/input/comments";
 import { IDetailedEventPageProps } from "@/types";
 import { getEventById, getFeaturedEvents } from "@/utils/api-helpers";
 import Head from "next/head";
@@ -16,7 +17,7 @@ const EventDetailPage = memo((props: IDetailedEventPageProps) => {
         </div>
     }
 
-    const { date, description, image, location, title } = event;
+    const { date, description, image, location, title, id } = event;
 
     //!dynamic contents inside head
     return <>
@@ -34,6 +35,7 @@ const EventDetailPage = memo((props: IDetailedEventPageProps) => {
         <EventContent >
             <p>{description}</p>
         </EventContent>
+        <Comments eventId={id} />
     </>
 });
 

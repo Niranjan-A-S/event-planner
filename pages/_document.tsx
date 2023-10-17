@@ -7,7 +7,7 @@ class Test extends Document {
                 <meta name="description" content="Find a lot of great events that allow you to evolve..." />
             </Head>
             <body>
-                <h1 id="Overlays">This can act as portal</h1>
+                {/* <h1 id="Overlays">This can act as portal</h1> */}
                 <Main />
                 <NextScript />
             </body>
